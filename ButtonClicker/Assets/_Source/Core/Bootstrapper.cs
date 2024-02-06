@@ -1,4 +1,5 @@
 using Core.GameState;
+using Event;
 using ResourceSystem;
 using SaveLoadSystem;
 using TimeInGame.View;
@@ -16,14 +17,16 @@ namespace Core
         private SaveData _saveData;
         private IResource _resource;
         private GameTime _gameTime;
+        private Events _events;
 
         [Inject]
-        private void Construct(IStateMachine stateMachine, SaveData data, IResource resource, GameTime gameTime)
+        private void Construct(IStateMachine stateMachine, SaveData data, IResource resource, GameTime gameTime, Events events)
         {
             _stateMachine = stateMachine;
             _saveData = data;
             _resource = resource;
             _gameTime = gameTime;
+            _events = events;
         }
         
         private void Start()
@@ -32,7 +35,7 @@ namespace Core
 
             string path = Application.dataPath + "GameData.json";
             
-            _stateMachine.CreateStates(_saveData, _resource, _gameTime, path);
+            _stateMachine.CreateStates(_saveData, _resource, _gameTime, path, _events);
             _stateMachine.ChangeState<PlayGame>();
         }
 

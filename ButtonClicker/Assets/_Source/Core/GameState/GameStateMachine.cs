@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Event;
 using ResourceSystem;
 using SaveLoadSystem;
 using TimeInGame.View;
@@ -17,11 +18,11 @@ namespace Core.GameState
             _activeState.Enter();
         }
 
-        public void CreateStates(SaveData data, IResource resource, GameTime gameTime, string path)
+        public void CreateStates(SaveData data, IResource resource, GameTime gameTime, string path, Events events)
         {
             _states = new Dictionary<Type, IGameState>
             {
-                [typeof(LoadGame)] = new LoadGame(data, resource, gameTime, path),
+                [typeof(LoadGame)] = new LoadGame(data, resource, gameTime, path, events),
                 [typeof(PlayGame)] = new PlayGame(),
                 [typeof(SaveGame)] = new SaveGame(data, resource, gameTime, path)
             };

@@ -1,4 +1,5 @@
 ﻿using System;
+using Event;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -13,15 +14,19 @@ namespace ResourceSystem
         [SerializeField] private TextMeshProUGUI _holdTimeText;
 
         private IResource _resource;
+        private Events _events;
 
         private float _basePoint;
         private float _power;
         private bool _isPressed;
 
+        private int _clickCount = 1;
+
         [Inject]
-        private void Construct(IResource resource)
+        private void Construct(IResource resource, Events events)
         {
             _resource = resource;
+            _events = events;
         }
 
         private void Awake()
@@ -47,7 +52,12 @@ namespace ResourceSystem
         {
             _isPressed = false;
             
+            _events.OnClick("Click");
+            
             OnUpButton?.Invoke(_basePoint * _power);
+            
+            _events.OnClickWithParameters($"Hold time: {Math.Round(_power, 2)}", _clickCount++);
+            
             _holdTimeText.text = "Hold time: 0";
             _power = 0;
         }

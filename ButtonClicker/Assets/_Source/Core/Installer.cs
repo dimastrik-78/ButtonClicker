@@ -1,4 +1,5 @@
 using Core.GameState;
+using Event;
 using ResourceSystem;
 using SaveLoadSystem;
 using TimeInGame.View;
@@ -19,6 +20,10 @@ namespace Core
             
             Container.Bind<GameTime>()
                 .FromInstance(_time)
+                .AsSingle()
+                .NonLazy();
+            
+            Container.Bind<Events>()
                 .AsSingle()
                 .NonLazy();
         }
