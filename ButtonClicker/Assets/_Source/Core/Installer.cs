@@ -33,6 +33,11 @@ namespace Core
 
         private void SaveLoadBindings()
         {
+            Container.Bind<ISaveLoad>()
+                .To<JsonSystem>()
+                .AsSingle()
+                .NonLazy();
+            
             Container.Bind<SaveData>()
                 .AsSingle()
                 .NonLazy();

@@ -1,12 +1,11 @@
-﻿using ResourceSystem;
+﻿using System;
 using SaveLoadSystem;
-using TimeInGame.View;
 
 namespace Core.GameState
 {
     public interface IStateMachine
     {
-        void ChangeState<T>() where T : IGameState;
-        void CreateStates(SaveData data, IResource resource, GameTime gameTime, string path);
+        void ChangeState(Type gameState);
+        void CreateStates(ISaveLoad saveLoad);
     }
 }

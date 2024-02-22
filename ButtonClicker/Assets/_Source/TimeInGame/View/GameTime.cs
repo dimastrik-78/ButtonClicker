@@ -17,7 +17,7 @@ namespace TimeInGame.View
             _timeInGameText.text = $"Time in the game {first} {second}";
         }
 
-        public void SeTime(float timeInGame)
+        public void SetTime(float timeInGame)
         {
             TimeInGame = timeInGame;
         }

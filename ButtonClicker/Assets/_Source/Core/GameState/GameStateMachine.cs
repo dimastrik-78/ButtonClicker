@@ -11,22 +11,22 @@ namespace Core.GameState
         private Dictionary<Type, IGameState> _states;
         private IGameState _activeState;
         
-        public void ChangeState<T>() where T : IGameState
+        public void ChangeState(Type gameState)
         {
-            _activeState = _states[typeof(T)];
+            _activeState = _states[gameState];
             _activeState.Enter();
         }
 
-        public void CreateStates(SaveData data, IResource resource, GameTime gameTime, string path)
+        public void CreateStates(ISaveLoad saveLoad)
         {
             _states = new Dictionary<Type, IGameState>
             {
-                [typeof(LoadGame)] = new LoadGame(data, resource, gameTime, path),
+                [typeof(LunchGame)] = new LunchGame(saveLoad),
                 [typeof(PlayGame)] = new PlayGame(),
-                [typeof(SaveGame)] = new SaveGame(data, resource, gameTime, path)
+                [typeof(CloseGame)] = new CloseGame(saveLoad)
             };
             
-            ChangeState<LoadGame>();
+            ChangeState(typeof(LunchGame));
         }
     }
 }
